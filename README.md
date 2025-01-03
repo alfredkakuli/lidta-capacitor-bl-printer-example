@@ -1,18 +1,9 @@
-# Vuetify (Default)
+## Introduction
 
-This is the official scaffolding tool for Vuetify, designed to give you a head start in building your new Vuetify application. It sets up a base template with all the necessary configurations and standard directory structure, enabling you to begin development without the hassle of setting up the project from scratch.
+lidta-capacitor-bl-printer is the first free Capacitor solution to fully support print most documents including html with structure and styles to
+blutooth pos thermal printers without breaking any sweat.
 
-## ❗️ Important Links
-
-- 📄 [Docs](https://vuetifyjs.com/)
-- 🚨 [Issues](https://issues.vuetifyjs.com/)
-- 🏬 [Store](https://store.vuetifyjs.com/)
-- 🎮 [Playground](https://play.vuetifyjs.com/)
-- 💬 [Discord](https://community.vuetifyjs.com)
-
-## 💿 Install
-
-Set up your project using your preferred package manager. Use the corresponding command to install the dependencies:
+## Installation
 
 | Package Manager                                                | Command        |
 |---------------------------------------------------------------|----------------|
@@ -21,63 +12,94 @@ Set up your project using your preferred package manager. Use the corresponding 
 | [pnpm](https://pnpm.io/installation)                          | `pnpm install` |
 | [bun](https://bun.sh/#getting-started)                        | `bun install`  |
 
-After completing the installation, your environment is ready for Vuetify development.
-
-## ✨ Features
-
-- 🖼️ **Optimized Front-End Stack**: Leverage the latest Vue 3 and Vuetify 3 for a modern, reactive UI development experience. [Vue 3](https://v3.vuejs.org/) | [Vuetify 3](https://vuetifyjs.com/en/)
-- 🗃️ **State Management**: Integrated with [Pinia](https://pinia.vuejs.org/), the intuitive, modular state management solution for Vue.
-- 🚦 **Routing and Layouts**: Utilizes Vue Router for SPA navigation and vite-plugin-vue-layouts for organizing Vue file layouts. [Vue Router](https://router.vuejs.org/) | [vite-plugin-vue-layouts](https://github.com/JohnCampionJr/vite-plugin-vue-layouts)
-- ⚡ **Next-Gen Tooling**: Powered by Vite, experience fast cold starts and instant HMR (Hot Module Replacement). [Vite](https://vitejs.dev/)
-- 🧩 **Automated Component Importing**: Streamline your workflow with unplugin-vue-components, automatically importing components as you use them. [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components)
-
-These features are curated to provide a seamless development experience from setup to deployment, ensuring that your Vuetify application is both powerful and maintainable.
-
-## 💡 Usage
-
-This section covers how to start the development server and build your project for production.
-
-### Starting the Development Server
-
-To start the development server with hot-reload, run the following command. The server will be accessible at [http://localhost:3000](http://localhost:3000):
-
 ```bash
-yarn dev
+npm run build
+npx cap sync android
+npx cap run android ##and choose your device
 ```
 
 (Repeat for npm, pnpm, and bun with respective commands.)
-
-> Add NODE_OPTIONS='--no-warnings' to suppress the JSON import warnings that happen as part of the Vuetify import mapping. If you are on Node [v21.3.0](https://nodejs.org/en/blog/release/v21.3.0) or higher, you can change this to NODE_OPTIONS='--disable-warning=5401'. If you don't mind the warning, you can remove this from your package.json dev script.
-
-### Building for Production
-
-To build your project for production, use:
-
-```bash
-yarn build
-```
-
-(Repeat for npm, pnpm, and bun with respective commands.)
-
 
 ## Documentation
+
 [Visit Documentation Website](https://app.lidta.com/plugins/capacitor)
 
-## Vue 3 Capacitor 6 Capacitor exmaple 
-[See Vue 3 Capacitor 6 Example here](https://github.com/alfredkakuli/lidta-capacitor-bl-printer-example)
+## Vue 3 Capacitor 6 Capacitor exmaple
 
+## the following component uses vue 3 with composition API Syntax
+
+```Js
+<script setup>
+import { onMounted, ref } from 'vue'; //vue life cycle hooks(onMounted) and reactive (ref)
+import html2canvas from 'html2canvas'; //converts the html or any text to base64Image
+import { LidtaCapacitorBlPrinter } from 'lidta-capacitor-bl-printer'; //lidta-capacitor-bl-printer plugin
+
+const devices = ref([]);
+const connectedPrinter = ref({});
+const content = ref(null);
+
+const listDevices = async () => {
+  await LidtaCapacitorBlPrinter.getPairedDevices().then((result) => {
+      devices.value = result.devices || [];
+  }).catch((error) => {
+    alert(error);
+  });
+}
+
+const printReceipt = async (device) => {
+ await  LidtaCapacitorBlPrinter.connect({ address: device.address }).then(async () => {
+   connectedPrinter.value = device.name;
+   await  html2canvas(
+      content.value,
+    ).then(async (canvas) => {
+    const base64Image =  canvas.toDataURL("image/png");
+    LidtaCapacitorBlPrinter.printBase64({msg: base64Image, align: 1, /*0=>left 1=>center, 2=>right anything else=>invalid */ 
+    }).then(() => { LidtaCapacitorBlPrinter.disconnect();
+   }).catch((error) => alert(error)).finally(async () => {});
+  }).catch((error) => alert(error));
+  }).catch((error) => alert(error))
+};  
+</script>
+```
+
+## The following template uses Vuetify
+
+```html
+<template>
+<div class=" mt-8">
+  <div  class="text-center" >
+    <VBtn color="warning" class="text-center" variant="tonal"  @click="listDevices">
+      <VIcon icon="mdi-printer" size="24" color="info" ></VIcon>List Connected Devices</VBtn>
+  </div>
+  
+ <div class="text-center">
+   <VBtn variant="tonal" class="mt-1" v-for="device in devices" :key="device" @click="printReceipt(device)" color="indigo">
+  <VIcon icon="mdi-printer" ></VIcon>  Print on {{ device.name }} 
+  </VBtn>
+ </div>
+  <div class="text-center">
+    connected {{ connectedPrinter?.name }}
+  </div>
+
+<div  ref="content" id="content">
+    <h1>Hellow World</h1>
+    <img  height="80" width="80" src="@/assets/logo.png"  />
+</div>
+```
+
+[Clone  Full Vue 3 Capacitor 6 Example here](https://github.com/alfredkakuli/lidta-capacitor-bl-printer-example)
 
 ### Useful Links
-[![Official Website](https://www.npmjs.com/npm-avatar/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdmF0YXJVUkwiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci84MmMyYjhiZjY2MjFkZWM2MDQzMmRhMGZkM2EzY2M1ND9zaXplPTUwJmRlZmF1bHQ9cmV0cm8ifQ.HRDfqcUyaVF684N6a0RoyeP8odjHx9UbIBA_k8Uo8XM)](https://app.lidta.com) 
 
-
-
-This project does amazing things, and I’m glad you’re here!
+ Official Website  [Lidta tech](https://app.lidta.com)
 
 ## Support the Project
 
-If you like this project and want to support its development, feel free to buy me a coffee:
+This is the first free solution to fully support print most documents including html with structure and styles to
+blutooth pos thermal printers without breaking any sweat.
 
-[![Buy me a coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://buymeacoffee.com/alfredkakuli)
+<a href="https://www.buymeacoffee.com/alfredkakuli">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" width="150"/>
+</a>
 
 Your support is greatly appreciated and will help me keep improving this project.

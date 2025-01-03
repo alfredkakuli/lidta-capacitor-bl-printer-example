@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue';
 import html2canvas from 'html2canvas';
 import { LidtaCapacitorBlPrinter } from 'lidta-capacitor-bl-printer';
 const devices = ref([]);
-const connectedPrinter = ref(null);
+const connectedPrinter = ref({});
 const content = ref(null);
 
 const listDevices = async () => {
@@ -17,7 +17,6 @@ const listDevices = async () => {
 
 
 const printReceipt = async (device) => {
-  console.log(device);
  await  LidtaCapacitorBlPrinter.connect({ address: device.address }).then(async () => {
    connectedPrinter.value = device.name;
    await  html2canvas(
@@ -61,7 +60,7 @@ const printReceipt = async (device) => {
  </div>
 
   <div class="text-center">
-    connected {{ connectedPrinter?.name }}
+    connected {{ connectedPrinter }}
   </div>
 
 
