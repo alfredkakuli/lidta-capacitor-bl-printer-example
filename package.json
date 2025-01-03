@@ -15,7 +15,7 @@
     "@capacitor/ios": "^6.2.0",
     "@mdi/font": "7.4.47",
     "html2canvas": "^1.4.1",
-    "lidta-capacitor-bl-printer": "file:../lidta-capacitor-bl-printer",
+    "lidta-capacitor-bl-printer": "^0.0.1",
     "roboto-fontface": "*",
     "vue": "^3.4.31",
     "vuetify": "^3.6.14"

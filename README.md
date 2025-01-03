@@ -59,21 +59,25 @@ yarn build
 
 (Repeat for npm, pnpm, and bun with respective commands.)
 
-Once the build process is completed, your application will be ready for deployment in a production environment.
 
-## 💪 Support Vuetify Development
+## Documentation
+[Visit Documentation Website](https://app.lidta.com/plugins/capacitor)
 
-This project is built with [Vuetify](https://vuetifyjs.com/en/), a UI Library with a comprehensive collection of Vue components. Vuetify is an MIT licensed Open Source project that has been made possible due to the generous contributions by our [sponsors and backers](https://vuetifyjs.com/introduction/sponsors-and-backers/). If you are interested in supporting this project, please consider:
+## Vue 3 Capacitor 6 Capacitor exmaple 
+[See Vue 3 Capacitor 6 Example here](https://github.com/alfredkakuli/lidta-capacitor-bl-printer-example)
 
-- [Requesting Enterprise Support](https://support.vuetifyjs.com/)
-- [Sponsoring John on Github](https://github.com/users/johnleider/sponsorship)
-- [Sponsoring Kael on Github](https://github.com/users/kaelwd/sponsorship)
-- [Supporting the team on Open Collective](https://opencollective.com/vuetify)
-- [Becoming a sponsor on Patreon](https://www.patreon.com/vuetify)
-- [Becoming a subscriber on Tidelift](https://tidelift.com/subscription/npm/vuetify)
-- [Making a one-time donation with Paypal](https://paypal.me/vuetify)
 
-## 📑 License
-[MIT](http://opensource.org/licenses/MIT)
+### Useful Links
+[![Official Website](https://www.npmjs.com/npm-avatar/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdmF0YXJVUkwiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci84MmMyYjhiZjY2MjFkZWM2MDQzMmRhMGZkM2EzY2M1ND9zaXplPTUwJmRlZmF1bHQ9cmV0cm8ifQ.HRDfqcUyaVF684N6a0RoyeP8odjHx9UbIBA_k8Uo8XM)](https://app.lidta.com) 
 
-Copyright (c) 2016-present Vuetify, LLC
+
+
+This project does amazing things, and I’m glad you’re here!
+
+## Support the Project
+
+If you like this project and want to support its development, feel free to buy me a coffee:
+
+[![Buy me a coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://buymeacoffee.com/alfredkakuli)
+
+Your support is greatly appreciated and will help me keep improving this project.
